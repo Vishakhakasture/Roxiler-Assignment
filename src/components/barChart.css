@@ -1,0 +1,18 @@
+/* src/components/BarChart.css */
+
+.bar-chart-container {
+  width: 100%;
+  max-width: 800px; /* Maximum width for the chart */
+  margin: 0 auto; /* Center the chart */
+  padding: 20px; /* Padding around the chart */
+  background-color: #f9f9f9; /* Light background color for contrast */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.bar-chart-title {
+  text-align: center; /* Center the title */
+  font-size: 24px; /* Font size for the title */
+  font-weight: bold; /* Bold title */
+  margin-bottom: 20px; /* Space below the title */
+}
