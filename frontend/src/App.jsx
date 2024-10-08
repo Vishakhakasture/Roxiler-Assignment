@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -12,10 +12,12 @@ import TransactionTable from "./components/TransactionTable";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
-  const month = "June"; // This can be dynamically set based on the dropdown
-  const totalSale = "$100,000"; // Example value
-  const totalSoldItems = "55"; // Example value
-  const totalNotSoldItems = "15";
+  const [selectedMonth, setSelectedMonth] = useState("June");
+
+  const handleMonthChange = (event) => {
+    setSelectedMonth(event.target.value);
+  };
+
   return (
     <Router>
       <div className="container mt-4">
@@ -23,9 +25,9 @@ const App = () => {
 
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container-fluid">
-            <NavLink className="navbar-brand" to="/">
+            {/* <NavLink className="navbar-brand" to="/">
               Roxiler
-            </NavLink>
+            </NavLink> */}
             <button
               className="navbar-toggler"
               type="button"
@@ -69,16 +71,12 @@ const App = () => {
           <Route path="/pie-chart" element={<PieChart />} />
           <Route
             path="/statistics"
-            element={
-              <Statistics
-                month={month}
-                totalSale={totalSale}
-                totalSoldItems={totalSoldItems}
-                totalNotSoldItems={totalNotSoldItems}
-              />
-            }
+            element={<Statistics month={selectedMonth} />}
           />
-          <Route path="/transactions" element={<TransactionTable />} />
+          <Route
+            path="/transactions"
+            element={<TransactionTable selectedMonth={selectedMonth} />}
+          />
         </Routes>
       </div>
     </Router>

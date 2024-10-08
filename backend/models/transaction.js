@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-// Define the schema for a transaction
 const transactionSchema = new mongoose.Schema({
   productId: String,
   title: String,
@@ -11,5 +10,4 @@ const transactionSchema = new mongoose.Schema({
   sold: Boolean,
 });
 
-// Create and export the model
 module.exports = mongoose.model("Transaction", transactionSchema);

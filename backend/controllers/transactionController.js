@@ -1,7 +1,6 @@
 const axios = require("axios");
 const Transaction = require("../models/transaction");
 
-// Initialize the MongoDB database with data from the third-party API
 exports.initializeDatabase = async (req, res) => {
   try {
     const response = await axios.get(
@@ -9,7 +8,6 @@ exports.initializeDatabase = async (req, res) => {
     );
     const transactions = response.data;
 
-    // Insert data into MongoDB
     await Transaction.insertMany(transactions);
     res.status(200).json({ message: "Database initialized successfully" });
   } catch (error) {
@@ -18,7 +16,6 @@ exports.initializeDatabase = async (req, res) => {
   }
 };
 
-// List all transactions with search and pagination
 exports.listTransactions = async (req, res) => {
   const { month, page = 1, perPage = 10, search = "" } = req.query;
 
@@ -26,7 +23,7 @@ exports.listTransactions = async (req, res) => {
     return res.status(400).json({ message: "Month is required" });
   }
 
-  const regex = new RegExp(search, "i"); // Case-insensitive search
+  const regex = new RegExp(search, "i");
   const startOfMonth = new Date(
     `${new Date().getFullYear()}-${month}-01T00:00:00Z`
   );
@@ -50,7 +47,6 @@ exports.listTransactions = async (req, res) => {
   }
 };
 
-// Get statistics for the total sales, total sold, and total not sold
 exports.statistics = async (req, res) => {
   const { month } = req.query;
 
@@ -102,7 +98,6 @@ exports.statistics = async (req, res) => {
   }
 };
 
-// Get bar chart data based on price ranges for a given month
 exports.barChartData = async (req, res) => {
   const { month } = req.query;
 
@@ -143,7 +138,6 @@ exports.barChartData = async (req, res) => {
   res.status(200).json(barChartData);
 };
 
-// Get pie chart data based on unique categories for a given month
 exports.pieChartData = async (req, res) => {
   const { month } = req.query;
 

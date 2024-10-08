@@ -1,37 +1,40 @@
-// src/components/Statistics.js
 import React, { useState, useEffect } from "react";
 import "./statistics.css";
 
 const Statistics = () => {
   const [selectedMonth, setSelectedMonth] = useState("June");
-  const [totalSale, setTotalSale] = useState("$100,000");
-  const [totalSoldItems, setTotalSoldItems] = useState("55");
-  const [totalNotSoldItems, setTotalNotSoldItems] = useState("15");
+  const [totalSale, setTotalSale] = useState(null);
+  const [totalSoldItems, setTotalSoldItems] = useState(null);
+  const [totalNotSoldItems, setTotalNotSoldItems] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Mapping of month names to sales data
-  const monthData = {
-    January: { sale: "$80,000", sold: "40", notSold: "20" },
-    February: { sale: "$90,000", sold: "45", notSold: "15" },
-    March: { sale: "$70,000", sold: "30", notSold: "25" },
-    April: { sale: "$110,000", sold: "60", notSold: "10" },
-    May: { sale: "$95,000", sold: "50", notSold: "5" },
-    June: { sale: "$100,000", sold: "55", notSold: "15" },
-    July: { sale: "$120,000", sold: "65", notSold: "5" },
-    August: { sale: "$130,000", sold: "70", notSold: "5" },
-    September: { sale: "$85,000", sold: "35", notSold: "25" },
-    October: { sale: "$150,000", sold: "80", notSold: "10" },
-    November: { sale: "$160,000", sold: "85", notSold: "5" },
-    December: { sale: "$175,000", sold: "90", notSold: "5" },
-  };
-
-  // Update statistics when the selected month changes
   useEffect(() => {
-    const currentData = monthData[selectedMonth];
-    if (currentData) {
-      setTotalSale(currentData.sale);
-      setTotalSoldItems(currentData.sold);
-      setTotalNotSoldItems(currentData.notSold);
-    }
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `http://localhost:5000/api/sales/statistics?month=${selectedMonth}`
+        );
+
+        const data = await response.json();
+        console.log("API Response Data: ", data);
+
+        if (response.ok) {
+          setTotalSale(data.totalSaleAmount);
+          setTotalSoldItems(data.totalSoldItems);
+          setTotalNotSoldItems(data.totalNotSoldItems);
+        } else {
+          throw new Error("Failed to fetch data from API");
+        }
+        setLoading(false);
+      } catch (error) {
+        setError("Failed to fetch statistics. Please try again later.");
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, [selectedMonth]);
 
   const handleMonthChange = (event) => {
@@ -47,23 +50,56 @@ const Statistics = () => {
         onChange={handleMonthChange}
         className="month-dropdown"
       >
-        {Object.keys(monthData).map((month) => (
+        {[
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ].map((month) => (
           <option key={month} value={month}>
             {month}
           </option>
         ))}
       </select>
-      <div className="stats-box">
-        <div className="statistics-item">
-          <strong>Total Sale:</strong> {totalSale}
+
+      {loading ? (
+        <div>Loading...</div>
+      ) : error ? (
+        <div>{error}</div>
+      ) : (
+        <div className="stats-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Total Sale</td>
+                <td>{totalSale}</td>
+              </tr>
+              <tr>
+                <td>Total Sold Items</td>
+                <td>{totalSoldItems}</td>
+              </tr>
+              <tr>
+                <td>Total Not Sold Items</td>
+                <td>{totalNotSoldItems}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div className="statistics-item">
-          <strong>Total Sold Item:</strong> {totalSoldItems}
-        </div>
-        <div className="statistics-item">
-          <strong>Total Not Sold Item:</strong> {totalNotSoldItems}
-        </div>
-      </div>
+      )}
     </div>
   );
 };

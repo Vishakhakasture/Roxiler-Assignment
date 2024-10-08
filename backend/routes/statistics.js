@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const Transaction = require("../models/Transaction"); // Your Transaction model
+const Transaction = require("../models/Transaction");
 
-// Get Sales Statistics (Total Sale, Sold and Not Sold Items)
 router.get("/sales/statistics", async (req, res) => {
   try {
     const { month } = req.query;
@@ -11,8 +10,7 @@ router.get("/sales/statistics", async (req, res) => {
       return res.status(400).json({ message: "Month is required" });
     }
 
-    const monthNumber = new Date(Date.parse(month + " 1, 2000")).getMonth() + 1; // Convert month name to month number
-
+    const monthNumber = new Date(Date.parse(month + " 1, 2000")).getMonth() + 1;
     const statistics = await Transaction.aggregate([
       {
         $match: {
