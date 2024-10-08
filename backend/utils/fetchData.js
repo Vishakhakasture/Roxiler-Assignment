@@ -1,8 +1,5 @@
-// backend/utils/fetchData.js
-
 const axios = require("axios");
 
-// Function to fetch data from the third-party API
 const fetchData = async () => {
   try {
     const response = await axios.get(

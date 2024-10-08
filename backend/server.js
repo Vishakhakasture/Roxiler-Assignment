@@ -15,7 +15,16 @@ mongoose
   .catch((err) => console.log("MongoDB connection error:", err));
 
 const transactionRoutes = require("./routes/transaction");
+const statisticsRoutes = require("./routes/statistics");
+const barChartRoutes = require("./routes/barChart"); // Import bar chart route
+const pieChartRoutes = require("./routes/pieChart"); // Import pie chart route
+const combinedDataRoutes = require("./routes/combinedData"); // Import combined data route
+
 app.use("/api", transactionRoutes);
+app.use("/api", statisticsRoutes);
+app.use("/api", barChartRoutes); // Use bar chart route
+app.use("/api", pieChartRoutes); // Use pie chart route
+app.use("/api", combinedDataRoutes); // Use combined data route
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

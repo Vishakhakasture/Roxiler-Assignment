@@ -1,13 +1,15 @@
 const mongoose = require("mongoose");
 
+// Define the schema for a transaction
 const transactionSchema = new mongoose.Schema({
-  id: Number,
+  productId: String,
   title: String,
-  price: Number,
   description: String,
-  category: String,
+  price: Number,
   dateOfSale: Date,
+  category: String,
   sold: Boolean,
 });
 
+// Create and export the model
 module.exports = mongoose.model("Transaction", transactionSchema);
