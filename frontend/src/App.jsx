@@ -25,9 +25,6 @@ const App = () => {
 
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container-fluid">
-            {/* <NavLink className="navbar-brand" to="/">
-              Roxiler
-            </NavLink> */}
             <button
               className="navbar-toggler"
               type="button"

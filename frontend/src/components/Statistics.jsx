@@ -9,6 +9,7 @@ const Statistics = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // statistics data fetch
   useEffect(() => {
     const fetchData = async () => {
       try {

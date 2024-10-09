@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import "./barChart.css"; // Importing the CSS file
+import "./barChart.css";
 
 ChartJS.register(
   CategoryScale,

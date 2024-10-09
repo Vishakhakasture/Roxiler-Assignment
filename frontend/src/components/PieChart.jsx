@@ -25,6 +25,7 @@ const PieChart = () => {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
 
+  // piechart data fetch
   useEffect(() => {
     const getData = async () => {
       try {

@@ -10,6 +10,7 @@ const TransactionTable = () => {
   const [totalPages, setTotalPages] = useState(1);
   const perPage = 10;
 
+  // transaction data fetch
   useEffect(() => {
     const fetchData = async () => {
       try {
